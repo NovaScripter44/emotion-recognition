@@ -70,6 +70,7 @@ EarlyStopping and class_weight balancing added
 
 ## Streamlit App Usage:
 ### Activate virtual environment
+```
 venv\Scripts\activate  # Windows
 source venv/bin/activate  # Linux/macOS
 
@@ -78,7 +79,7 @@ pip install -r requirements.txt
 
 ### Run app
 streamlit run app.py
-
+```
 ---
 
 ## Testing using test_model.py :
