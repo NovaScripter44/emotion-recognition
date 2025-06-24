@@ -9,7 +9,7 @@ This project is a complete end-to-end pipeline for **speech/song emotion recogni
 
 ---
 
-## 📁 Project Structure
+```
 emotion-recognition/
 ├── app.py # 🌐 Streamlit app
 ├── model/
@@ -19,9 +19,12 @@ emotion-recognition/
 ├── requirements.txt # 📦 Python dependencies
 ├── test_audio/
 │ └── test.wav # 🎙️ Sample test audio
-├── temp_wav/ # 🔊 Another test audio
-└── emotion-recognition_notebook.ipynb # 📓 Training + experiments notebook
-└── test_model.py # Python script file where model can be tested by feeding test data.
+├── temp_wav/ # 🔊 Stores temp audio files
+├── emotion-recognition_notebook.ipynb # 📓 Training + experiments notebook
+└── test_model.py # 🧪 CLI script for testing model on sample
+```
+
+
 
 ---
 
@@ -66,14 +69,14 @@ EarlyStopping and class_weight balancing added
 ---
 
 ## Streamlit App Usage:
-# Activate virtual environment
+### Activate virtual environment
 venv\Scripts\activate  # Windows
 source venv/bin/activate  # Linux/macOS
 
-# Install dependencies
+### Install dependencies
 pip install -r requirements.txt
 
-# Run app
+### Run app
 streamlit run app.py
 
 ---
@@ -82,6 +85,7 @@ streamlit run app.py
 python test_model.py
 
 ## 📌 Dataset Used:
+```
 https://zenodo.org/records/1188976#.XCx-tc9KhQI
 -Only audio files (not video) were used.
 -Contains recordings by 24 actors in 8 emotion categories.
