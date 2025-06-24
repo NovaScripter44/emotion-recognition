@@ -1,94 +1,146 @@
-# 🎭 Emotion Recognition from Speech (RAVDESS Dataset)
+# 🌟 Emotion Recognition from Speech using CNNs (RAVDESS Dataset)
 
-This project is a complete end-to-end pipeline for **speech/song emotion recognition**, built using:
+This repository showcases a **complete end-to-end pipeline** for emotion recognition from speech using Deep Learning and the **RAVDESS** dataset. The project includes:
 
-- Deep Learning (CNNs)
-- Audio feature extraction using **MFCCs + Delta**
-- Interactive **Streamlit app** to test by uploading audio
-- Trained and tested using the **RAVDESS dataset**
+* 🎧 Audio processing and MFCC-based feature extraction
+* 🤖 CNN-based deep learning model for classifying 8 emotions
+* 🌐 Streamlit web application for testing via file upload
+* 🧪 CLI script for direct testing
 
 ---
 
-```
+## 📚 Project Structure
+
+```bash
 emotion-recognition/
-├── app.py # 🌐 Streamlit app
+├── app.py                      # 🌐 Streamlit app
 ├── model/
-│ ├── emotion_cnn_model.h5 # 🤖 Trained CNN model
-│ └── label_encoder.pkl # 🏷️ LabelEncoder for emotion classes
-├── utils.py # ⚙️ Feature extraction (MFCC, delta), helpers
-├── requirements.txt # 📦 Python dependencies
+│   ├── emotion_cnn_model.h5    # 🤖 Trained CNN model
+│   └── label_encoder.pkl       # 🌿 Fitted LabelEncoder for class decoding
+├── utils.py                   # ⚙️ Audio feature extraction & preprocessing
+├── requirements.txt           # 📆 Python dependencies
 ├── test_audio/
-│ └── test.wav # 🎙️ Sample test audio
-├── temp_wav/ # 🔊 Stores temp audio files
-├── emotion-recognition_notebook.ipynb # 📓 Training + experiments notebook
-└── test_model.py # 🧪 CLI script for testing model on sample
+│   └── test.wav               # 🎧 Sample test file
+├── temp_wav/                  # 🎶 Temporarily stored user recordings
+├── audio_emotion_classification.ipynb  # 📓 Model training notebook
+└── test_model.py              # 🔮 CLI-based testing script
 ```
-
-
 
 ---
 
 ## 🚀 Features
 
-- 🎧 Accepts uploaded `.wav` files
-- 🎯 Trained on 8 emotion classes:
+* Trained on 8 classes:
   `['angry', 'calm', 'disgust', 'fearful', 'happy', 'neutral', 'sad', 'surprised']`
-- 📊 Achieved >80% accuracy and macro F1 score and >=75% accuracy in other classes
-- 📈 Early stopping, class balancing, and MFCC + Delta stacking used for best performance
+* Achieved:
+
+  * ✅ Overall accuracy > 85%
+  * ✅ Macro F1 score > 0.85
+  * ✅ Minimum class accuracy ≥ 75%
+* Includes **early stopping**, **class imbalance correction**, and **temporal feature engineering** (MFCC + Delta)
 
 ---
 
-## 🛠️ How It Works
+## 🔧 Model Details
 
-### 🔉 Feature Extraction
+### 🔊 Feature Extraction (via `utils.py`)
 
-- We use **Librosa** to extract:
-  - `MFCCs`: Mel-Frequency Cepstral Coefficients
-  - `Delta`: First-order temporal derivative of MFCCs
-- For CNN:
-  - MFCC + Delta stacked vertically
-  - Input shape: `(80, 300, 1)` — 80 features over 300 time steps
+* `librosa` is used to compute:
 
-### 🧠 Model (CNN)
+  * **MFCCs** (Mel-Frequency Cepstral Coefficients)
+  * **Delta** features (temporal derivative of MFCC)
+* These are stacked to form a 2D input of shape **(80, 300, 1)**
+* Padding and truncation ensure fixed-length inputs
+
+### 🧠 CNN Architecture
 
 ```python
 Sequential([
-    Conv2D(32), MaxPooling2D, BatchNorm,
-    Conv2D(64), MaxPooling2D, BatchNorm,
-    Conv2D(128), MaxPooling2D, BatchNorm,
-    GlobalAveragePooling2D,
-    Dense(128, relu) + Dropout(0.3),
-    Dense(num_classes, softmax)
+    Conv2D(32), BatchNorm, MaxPooling2D,
+    Conv2D(64), BatchNorm, MaxPooling2D,
+    Conv2D(128), BatchNorm, MaxPooling2D,
+    GlobalAveragePooling2D(),
+    Dense(128, activation='relu'), Dropout(0.3),
+    Dense(num_classes, activation='softmax')
 ])
-Optimizer: Adam
-
-Loss: categorical_crossentropy
-
-EarlyStopping and class_weight balancing added
 ```
+
+* Optimizer: `Adam`
+* Loss Function: `categorical_crossentropy`
+* Trained with: `EarlyStopping`, `class_weight`
+
 ---
 
-## Streamlit App Usage:
-### Activate virtual environment
-```
+## 🚪 Streamlit Web App
+
+ After Cloning the repo,Run the interactive frontend with:
+
+```bash
+# Activate virtual environment
 venv\Scripts\activate  # Windows
+# OR
 source venv/bin/activate  # Linux/macOS
 
-### Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-### Run app
+# Launch app
 streamlit run app.py
 ```
+
+### 🔊 App Features
+
+* Upload `.wav` files for emotion detection
+* Record live audio (up to 7s) using your browser
+* Real-time prediction and result display
+
 ---
 
-## Testing using test_model.py :
+## 🔮 Testing from Script
+
+Use `test_model.py` to test new samples without the UI:
+
+```bash
 python test_model.py
-
-## 📌 Dataset Used:
 ```
-https://zenodo.org/records/1188976#.XCx-tc9KhQI
-```
--Only audio files (not video) were used.
--Contains recordings by 24 actors in 8 emotion categories.
 
+* Make sure the test file is in `test_audio/`
+* Outputs the predicted emotion and optionally plots the MFCC
+
+---
+
+## 📄 Dataset
+
+[RAVDESS - Ryerson Audio-Visual Database of Emotional Speech and Song](https://zenodo.org/record/1188976)
+
+* 24 professional actors
+* 8 emotions (spoken & sung)
+* 48 kHz, high-quality WAV audio
+* Only **speech** files were used in this project
+
+---
+
+## 📃 Performance Snapshot
+
+![image](https://github.com/user-attachments/assets/eba60231-6258-4b0a-a9c1-24410a7113b0)
+
+
+---
+
+## 🎓 Future Work
+
+* Add **transformer-based models** for comparison
+* Improve robustness for noisy environments
+* Add **gender-based emotion analysis**
+
+---
+
+## 🌟 Contributors
+
+* Aditya (NovaScripter44)
+
+---
+
+## 📚 License
+
+This project is released for academic and learning purposes.
