@@ -88,6 +88,7 @@ python test_model.py
 ## 📌 Dataset Used:
 ```
 https://zenodo.org/records/1188976#.XCx-tc9KhQI
+```
 -Only audio files (not video) were used.
 -Contains recordings by 24 actors in 8 emotion categories.
 
