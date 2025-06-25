@@ -1,7 +1,6 @@
 streamlit
 librosa
-numpy
-tensorflow>=2.11.0,<2.13
+tensorflow==2.11.0
 scikit-learn
 matplotlib
 soundfile
